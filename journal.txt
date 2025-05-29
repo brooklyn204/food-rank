@@ -1,0 +1,12 @@
+make virtual environment (python -m venv venv)
+start virtual environment (venv\Scripts\activate)
+install flask (pip install flask)
+add files (app.py, index.html, style.css)
+run app (python app.py)
+view app at http://127.0.0.1:5000
+
+TODO: set up git repo (git init, add, commit), make GitHub repo, connect local + remote (git remote add origin), push; set up docker
+
+app.py:
+/ --> index.html
+/submit --> default text (FIXME long term to new file and probably new path)
