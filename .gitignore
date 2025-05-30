@@ -1,3 +1,4 @@
+journal.txt
 static/secret.txt
 venv/
-journal.txt
+__pycache__/
