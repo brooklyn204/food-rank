@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Food Finder</title>
+    <title>Food Rank</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Welcome to Food Finder!</h1>
-    <a href="google.com">Make a new group</a>
+    <h1>Welcome to Food Rank!</h1>
+    <a href="/makeagroup">Make a new group</a>
     <h2>Enter a code:</h2>
-    <form action="/submit" method="POST">
+    <form action="/vote" method="POST">
         <input type="text" name="group_code" placeholder="XXX XXX" required>
         <button type="submit">Submit</button>
     </form>

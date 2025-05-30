@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Rank</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Vote</h1>
+    <p>Drag the options below to put them in order of preference.</p>
+    <form action="/results" method="GET"> <!-- TODO: add in parameter or something here to pass code to results page -->
+        <input type="number" name="option1" required>
+        <input type="number" name="option2" required>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

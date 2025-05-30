@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Rank</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Make a New Group</h1>
+    <form action="/savegroup" method="POST">
+        <p>Enter group name:</p>
+        <input type="text" name="name">
+        <p>Enter choices:</p>
+        <input type="text" name="option1"> <button type="button">X</button>
+        <input type="text" name="option2"> <button type="button">X</button>
+        <input type="text" name="option3"> <button type="button">X</button>        
+        <button type="submit">Submit</button>
+    </form>
+    
+</body>
+</html>
