@@ -6,10 +6,12 @@
 </head>
 <body>
     <h1>Vote</h1>
+    <p>Group: {{ name }}</p>
     <p>Drag the options below to put them in order of preference.</p>
-    <form action="/results" method="GET"> <!-- TODO: add in parameter or something here to pass code to results page -->
-        <input type="number" name="option1" required>
-        <input type="number" name="option2" required>
+    <form action="/results" method="POST"> <!-- TODO: add in parameter or something here to pass code to results page -->
+        {% for idx in range(items|length): %}
+            <p id="item{{ idx }}">{{items[idx]}}</p>
+        {% endfor %}
         <button type="submit">Submit</button>
     </form>
 </body>

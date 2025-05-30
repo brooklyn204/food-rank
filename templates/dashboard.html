@@ -8,8 +8,11 @@
     <h1>Dashboard</h1>
     <p>Your code is:</p>
     <p>{{ pin }}</p>
-    <p>Share this code with your group so they can vote!</p>
+    <p>Share it with your group {{ name }} so they can vote for their favorite restaurants!</p>
     <h1>Results</h1>
-    <p>**Results go here**</p>
+    {% for item in items: %}
+        <p>{{item}}</p>
+    {% endfor %}
+    
 </body>
 </html>

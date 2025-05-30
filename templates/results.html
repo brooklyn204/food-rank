@@ -6,6 +6,9 @@
 </head>
 <body>
     <h1>Results</h1>
-    <p>**Results go here**</p>
+    <p>For group {{ name }}</p>
+    {% for item in items: %}
+        <p>{{item}}</p>
+    {% endfor %}
 </body>
 </html>
