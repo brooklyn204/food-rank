@@ -2,3 +2,4 @@ journal.txt
 static/secret.txt
 venv/
 __pycache__/
+instance/
