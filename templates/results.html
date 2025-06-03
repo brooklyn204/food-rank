@@ -7,8 +7,8 @@
 <body>
     <h1>Results</h1>
     <p>For group {{ name }}</p>
-    {% for item in items: %}
-        <p>{{item}}</p>
+    {% for (item, votes) in results: %}
+        <p>{{item}} - {{votes}}</p>
     {% endfor %}
 </body>
 </html>

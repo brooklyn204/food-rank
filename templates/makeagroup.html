@@ -3,6 +3,26 @@
 <head>
     <title>Food Rank</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- TODO: replace script with real js file (or maybe switch out completely for react or smth, long term) -->
+    <script>
+        let optionNum = 1;
+        function addRow() {
+            // Generate text for new row to be inserted
+            let newRow = `<input type="text" name="option${optionNum}"> <button type="button">X</button><br>`;
+
+            // Insert new row before button (after all other rows)
+            const button = document.getElementById("addRowButton");
+            button.insertAdjacentHTML("beforebegin", newRow);
+
+            // Next row should have the next index up
+            optionNum++;
+        }
+
+        <!-- TODO: implement this -->
+        function removeRow() {
+            alert('removed')
+        }
+    </script>      
 </head>
 <body>
     <h1>Make a New Group</h1>
@@ -10,9 +30,8 @@
         <p>Enter group name:</p>
         <input type="text" name="name">
         <p>Enter choices:</p>
-        <input type="text" name="option1"> <button type="button">X</button>
-        <input type="text" name="option2"> <button type="button">X</button>
-        <input type="text" name="option3"> <button type="button">X</button>        
+        <input type="text" name="option0"> <button type="button" onclick="removeRow()">X</button><br>
+        <button id="addRowButton" type="button" onclick="addRow()">New option</button>
         <button type="submit">Submit</button>
     </form>
     

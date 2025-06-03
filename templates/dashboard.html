@@ -10,8 +10,8 @@
     <p>{{ pin }}</p>
     <p>Share it with your group {{ name }} so they can vote for their favorite restaurants!</p>
     <h1>Results</h1>
-    {% for item in items: %}
-        <p>{{item}}</p>
+    {% for (name,votes) in items: %}
+        <p>{{name}} - {{votes}}</p>
     {% endfor %}
     
 </body>

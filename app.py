@@ -86,9 +86,10 @@ def makeagroup():
 @app.route('/savegroup', methods=['POST'])
 def savegroup():
     # Get POSTed variables, if they exist
+    print('savegroup')
     try:
         name = request.form['name']
-        items = [request.form['option1'], request.form['option2'], request.form['option3']] # TODO: get real items via tags
+        items = [request.form[f'option{idx}'] for idx in range(len(request.form) - 1)]
     except Exception as e:
         return redirect('/error')
     
@@ -107,12 +108,11 @@ def dashboard():
     if pin == None:
         return redirect('/error')
 
-    # TODO: replace this with DB access
+    # Get group name and items from the DB
     user = User.query.filter_by(pin=pin).first()
     name = user.name
     options = Option.query.filter_by(pin=pin).all()
-    items = [op.name for op in options]
-    print(f'Entered query select(User).where(User.pin == pin), got back {user} with name {user.name}, items {items}')
+    items = [(op.name,op.votes) for op in options]
 
     return  render_template('dashboard.html', pin=pin, name=name, items=items) # TODO: integrate name, pin, and items into dashboard template
 
@@ -134,7 +134,7 @@ def vote():
         # TODO: have it display an error message on homepage somehow telling them they had a bad code
         return redirect('/')
     name = user.name
-    options = Option.query.filter_by(pin=input_pin).all()
+    options = Option.query.filter_by(pin=input_pin).order_by('id').all()
     items = [op.name for op in options]
     
     session['input_pin'] = input_pin # TODO: change this for better style? (We've now potentially got 'pin' and 'input_pin' floating around in session, seem like bad names)
@@ -145,17 +145,25 @@ def vote():
 def results():
     input_pin = session.get('input_pin')
     # TODO: get votes from POST request, update results in DB
+    votes = [request.form[f'vote{i}'] for i in range(len(request.form))]
 
     # Find name and items corresponding to input pin
     user = User.query.filter_by(pin=input_pin).first()
     if user == None:
         return redirect('/error')
     name = user.name
-    options = Option.query.filter_by(pin=input_pin).all()
-    items = [op.name for op in options]
+    options = Option.query.filter_by(pin=input_pin).order_by('id').all()
     # TODO: move this ^^ repeated code into a helper function
 
-    return  render_template('results.html', name=name, items=items)
+    # Map votes onto items and update items accordingly
+    print(f'lenoptions: {len(options)}, lenvotes: {len(votes)}')
+    for i in range(min(len(options), len(votes))):
+        options[i].votes += int(votes[i]) # TODO: catch errors on this conversion
+    db.session.commit() # TODO: deal with race conditions??
+
+    # Collate names and votes for display
+    item_votes = [(op.name, op.votes) for op in options]
+    return  render_template('results.html', name=name, results=item_votes)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

@@ -10,7 +10,7 @@
     <p>Drag the options below to put them in order of preference.</p>
     <form action="/results" method="POST"> <!-- TODO: add in parameter or something here to pass code to results page -->
         {% for idx in range(items|length): %}
-            <p id="item{{ idx }}">{{items[idx]}}</p>
+            <p id="item{{ idx }}">{{items[idx]}}</p> <input type="number" name="vote{{ idx }}">
         {% endfor %}
         <button type="submit">Submit</button>
         <!-- TODO: add a button to skip to results page without voting -->
