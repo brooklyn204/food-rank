@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Rank</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Dashboard</h1>
+    <p>Your code is:</p>
+    <p>{{ pin }}</p>
+    <p>Share it with your group {{ name }} so they can vote for their favorite restaurants!</p>
+    <h1>Results</h1>
+    {% for (name,votes) in items: %}
+        <p>{{name}} - {{votes}}</p>
+    {% endfor %}
+    
+</body>
+</html>

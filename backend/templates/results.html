@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Rank</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Results</h1>
+    <p>For group {{ name }}</p>
+    {% for (item, votes) in results: %}
+        <p>{{item}} - {{votes}}</p>
+    {% endfor %}
+</body>
+</html>
