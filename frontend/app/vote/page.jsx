@@ -53,12 +53,9 @@ function SortableItem({ id, text }) {
 export default function Vote() {
   const params = useSearchParams();
   const groupCode = params.get('groupCode') || ''; // TODO: redirect back to home/to error page if this is empty
-  const [name, setName] = useState('');
-  const [submittedName, setSubmittedName] = useState('');
   const [error, setError] = useState(''); // For error checking -- necessary??
   const router = useRouter();
-  const redirectPage = 'welcome';
-  const newGroupPage = 'new';
+  const redirectPage = 'results';
 
   // TODO: get options from server using groupCode
 
@@ -80,8 +77,8 @@ export default function Vote() {
   const handleSubmit = () => {
     // TODO: submit the order to the server
     console.log('Submitted order:', items);
-    alert('Submitted: ' + items.join(', '));
-    router.push(`/results`);
+
+    router.push(`/${redirectPage}`);
   };
 
 
