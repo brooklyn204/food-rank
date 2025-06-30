@@ -49,7 +49,7 @@ export function LiveBarChart(data) {
           <Bar
             dataKey="value"
             radius={[6, 6, 0, 0]}
-            fill="#3b82f6"
+            fill="#3b82f6" // TODO: change this color
             animationDuration={500}
           >
             <LabelList
