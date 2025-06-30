@@ -5,12 +5,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 
+
 export default function Home() {
   const [name, setName] = useState('');
   const [submittedName, setSubmittedName] = useState('');
   const [error, setError] = useState(''); // For error checking -- necessary??
   const router = useRouter();
-  const redirectPage = 'welcome';
+  const redirectPage = 'vote';
+  const newGroupPage = 'new';
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page reload
@@ -30,27 +32,26 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
+        <h1>Food Finder</h1>
         <form onSubmit={handleSubmit}>
         <label>
-          Enter your name: <br />
+          Enter your group code: <br />
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Your name"
+            placeholder="XXX-XXX"
           />
         </label>
         <br />
         <button type="submit" style={{ marginTop: '1rem' }}>
-          Submit
+          Vote
         </button>
       </form>
 
-      {submittedName && (
-        <p style={{ marginTop: '1rem' }}>
-          Nice to meet you, <strong>{submittedName}</strong>!
-        </p>
-      )}
+      <p>
+        Or <a href={newGroupPage}>create a new group</a>.
+      </p>
         
       </main>
     </div>
