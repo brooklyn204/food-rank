@@ -7,11 +7,11 @@ import { useRouter } from 'next/navigation';
 
 
 export default function Home() {
-  const [name, setName] = useState('');
+  const [name, setName] = useState(''); // TODO: rename this
   const [submittedName, setSubmittedName] = useState('');
   const [error, setError] = useState(''); // For error checking -- necessary??
   const router = useRouter();
-  const redirectPage = 'vote';
+  const redirectPage = 'vote'; // TODO: rename this
   const newGroupPage = 'new';
 
   const handleSubmit = async (e) => {
@@ -25,8 +25,7 @@ export default function Home() {
 
     // Submit the name to the API here
     
-    router.push(`/${redirectPage}?name=${encodeURIComponent(name)}`);
-    
+    router.push(`/${redirectPage}?name=${encodeURIComponent(name)}`); // TODO: pass codes around using cookies or something instead? Research best practices
   };
 
   return (

@@ -74,7 +74,8 @@ export default function Vote() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent page reload
     // TODO: submit the order to the server
     console.log('Submitted order:', items);
 
@@ -108,7 +109,7 @@ export default function Vote() {
           cursor: 'pointer',
         }}
       >
-        Submit Order
+        Submit Votes
       </button>
       </main>
     </div>
