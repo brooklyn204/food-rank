@@ -18,37 +18,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-
-function SortableItem({ id, text }) {
-  if (id === undefined || text === undefined) {
-    return; // TODO: add better error handling
-  }
-
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-  } = useSortable({ id });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    padding: '0.5rem 1rem',
-    border: '1px solid #ccc',
-    marginBottom: '8px',
-    backgroundColor: '#fff',
-    borderRadius: '4px',
-    cursor: 'grab',
-  };
-
-  return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      {text}
-    </div>
-  );
-}
+import ItemArray from '../../components/ItemArray'; // TODO: change these all to use @ -- figure out why this doesn't work??
 
 export default function Vote() {
   const params = useSearchParams();
@@ -88,11 +58,11 @@ export default function Vote() {
       <main className={styles.main}>
         <h1>Food Finder</h1>
 
+        {/* TODO: allow user to enter their name */}
+
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext items={items} strategy={verticalListSortingStrategy}>
-            {items.map((item) => (
-              <SortableItem key={item} id={item} text={vals[item]} />
-            ))}
+            <ItemArray items={items} vals={vals} interactive={true} />
           </SortableContext>
         </DndContext>
         
