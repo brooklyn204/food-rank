@@ -17,7 +17,7 @@ export default function ResultsChart(data) {
     <div style={{ width: 500, height: 400, padding: '2rem' }}> {/* TODO: make this dynamic sizing; move CSS to styles file; mess with colors */}
       <ResponsiveContainer>
         <BarChart
-          data={data.data}
+          data={data.data.map((location) => ({ label: location.name, value: location.votes}))}
           margin={{ top: 20, right: 30, left: 20, bottom: 40 }}
           barSize={50}
         >

@@ -4,6 +4,7 @@ import styles from "../page.module.css";
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ResultsChart from '../../components/ResultsChart';
+import Location from '../../lib/models/Location';
 
 export default function Results() {
   const params = useSearchParams();
@@ -15,11 +16,12 @@ export default function Results() {
 
   // FIXME: testing
   const votesData = [
-    { label: 'Apples', value: 1 },
-    { label: 'Bananas', value: 5 },
-    { label: 'Grapes', value: 10 },
-    { label: 'Oranges', value: 2 },
-  ];
+      new Location('McDonalds', 'mcdonalds.com', 4),
+      new Location('Wendys', 'wendys.com', 7),
+      new Location('Chipotle', 'chipotle.com', 6),
+      new Location('Arbys', 'arbys.com', 7),
+      new Location('Shake Shack', 'shakeshack.com',4),
+    ];
 
 
   return (
