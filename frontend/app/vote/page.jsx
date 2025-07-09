@@ -19,6 +19,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import ItemArray from '../../components/ItemArray'; // TODO: change these all to use @ -- figure out why this doesn't work??
+import Location from '../../lib/models/Location';
 
 export default function Vote() {
   const params = useSearchParams();
@@ -30,8 +31,14 @@ export default function Vote() {
   // TODO: get options from server using groupCode
 
   // FIXME: testing
-  const [items, setItems] = useState([0,1,2,3]);
-  const vals = ['apple', 'banana', 'grape', 'orange'];
+  const [items, setItems] = useState([0,1,2,3,-1]);
+  const [locations, setLocations] = useState([
+      new Location('McDonalds', 'mcdonalds.com', 4),
+      new Location('Wendys', 'wendys.com', 7),
+      new Location('Chipotle', 'chipotle.com', 6),
+      new Location('Arbys', 'arbys.com', 7),
+      new Location('Shake Shack', 'shakeshack.com',4),
+    ]);
 
   const sensors = useSensors(useSensor(PointerSensor));
 
@@ -41,6 +48,7 @@ export default function Vote() {
       const oldIndex = items.indexOf(active.id);
       const newIndex = items.indexOf(over.id);
       setItems(arrayMove(items, oldIndex, newIndex));
+
     }
   };
 
@@ -62,7 +70,7 @@ export default function Vote() {
 
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext items={items} strategy={verticalListSortingStrategy}>
-            <ItemArray items={items} vals={vals} interactive={true} />
+            <ItemArray items={items} vals={locations} interactive={true} />
           </SortableContext>
         </DndContext>
         

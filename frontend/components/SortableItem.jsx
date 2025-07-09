@@ -25,7 +25,10 @@ export default function SortableItem({ id, text, draggable = true }) {
     backgroundColor: '#fff',
     borderRadius: '4px',
     cursor: draggable ? 'grab' : 'default', // Change cursor based on draggable prop
-  };
+    height: '40px', 
+    display: 'flex',
+    alignItems: 'center',
+};
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>

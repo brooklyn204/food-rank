@@ -1,7 +1,8 @@
 class Location {
-  constructor({ name, link = '' }) {
+  constructor( name, websiteURL = '', votes = 0 ) {
     this.name = name;
-    this.link = link;
+    this.websiteURL = websiteURL;
+    this.votes = votes;
   }
 }
 
