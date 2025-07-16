@@ -22,8 +22,6 @@ export default function Home() {
       setError('Please enter your name.');
       return;
     }
-
-    // Submit the name to the API here
     
     router.push(`/${redirectPage}?name=${encodeURIComponent(name)}`); // TODO: pass codes around using cookies or something instead? Research best practices
   };

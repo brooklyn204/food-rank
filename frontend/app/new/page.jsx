@@ -13,10 +13,24 @@ export default function New() {
 
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent page reload (to preserve logs) TODO: remove this? IDK what the implications are
-        const groupId = 1234; // TODO: submit name + locations to the server, get back group ID
-        console.log('Submitted goup', groupName, 'with id', groupId,'and locations:', locations);
 
-        router.push(`/${redirectPage}?id=${encodeURIComponent(groupId)}`);
+        fetch('/api/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name: groupName, locations : locations }),
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log('POSTed',groupName,'and',locations,'to /create endpoint, got back',data);
+            let groupId = data.groupId;
+            router.push(`/${redirectPage}?id=${encodeURIComponent(groupId)}`);
+          })
+          .catch(error => {
+            // TODO: handle error -- redirect to home page, probably
+            console.error(error);
+          });
     };
 
     return (
