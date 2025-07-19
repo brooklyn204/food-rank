@@ -30,8 +30,6 @@ export default function Vote() {
 
   const [userName, setUserName] = useState('');
   const [groupName, setGroupName] = useState('');
-  const [userName, setUserName] = useState('');
-  const [groupName, setGroupName] = useState('');
   const [items, setItems] = useState([]);
   const [locations, setLocations] = useState([]);
   useEffect(() => {
