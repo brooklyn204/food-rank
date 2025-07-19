@@ -30,6 +30,8 @@ export default function Vote() {
 
   const [userName, setUserName] = useState('');
   const [groupName, setGroupName] = useState('');
+  const [userName, setUserName] = useState('');
+  const [groupName, setGroupName] = useState('');
   const [items, setItems] = useState([]);
   const [locations, setLocations] = useState([]);
   useEffect(() => {
@@ -39,6 +41,7 @@ export default function Vote() {
           const order = data.locations.map((location, index) => index);
           order.push(-1);
           setItems(order); // Create unique IDs for each item
+          setGroupName(data.name);
           setGroupName(data.name);
           setLocations(data.locations);
         })
@@ -83,6 +86,18 @@ export default function Vote() {
     <div className={styles.page}>
       <main className={styles.main}>
         <h1>Food Finder</h1>
+        <p>Voting for where your group {groupName} should eat</p>
+
+        <label>
+          Enter your name: <br />
+          <input
+            type="text"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            placeholder=""
+          />
+        </label>
+        {/* TODO: show instructions for voting */}
         <p>Voting for where your group {groupName} should eat</p>
 
         <label>
