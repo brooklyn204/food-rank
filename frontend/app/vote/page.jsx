@@ -1,7 +1,7 @@
 'use client';
 
 import styles from "../page.module.css";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import {
@@ -28,17 +28,23 @@ export default function Vote() {
   const router = useRouter();
   const redirectPage = 'results';
 
-  // TODO: get options from server using groupCode
-
-  // FIXME: testing
-  const [items, setItems] = useState([0,1,2,3,-1]);
-  const [locations, setLocations] = useState([
-      new Location('McDonalds', 'mcdonalds.com', 4),
-      new Location('Wendys', 'wendys.com', 7),
-      new Location('Chipotle', 'chipotle.com', 6),
-      new Location('Arbys', 'arbys.com', 7),
-      new Location('Shake Shack', 'shakeshack.com',4),
-    ]);
+  const [name, setName] = useState('');
+  const [items, setItems] = useState([]);
+  const [locations, setLocations] = useState([]);
+  useEffect(() => {
+        fetch(`/api/options?code=${encodeURIComponent(groupCode)}`)
+        .then(response => response.json())
+        .then(data => {
+          const order = data.locations.map((location, index) => index);
+          order.push(-1);
+          setItems(order); // Create unique IDs for each item
+          setName(data.name);
+          setLocations(data.locations);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }, [groupCode]);
 
   const sensors = useSensors(useSensor(PointerSensor));
 
@@ -48,13 +54,24 @@ export default function Vote() {
       const oldIndex = items.indexOf(active.id);
       const newIndex = items.indexOf(over.id);
       setItems(arrayMove(items, oldIndex, newIndex));
-
+      console.log("items are",items," locations are", locations);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent page reload
-    // TODO: submit the order to the server
+    fetch('/api/vote', {
+      method: 'POST',
+      headers: {
+            'Content-Type': 'application/json',
+          },
+      body: JSON.stringify({ code: groupCode, locations: locations}),
+    })
+    .then(response => response.json())
+    .catch(error => {
+      // handle error
+      console.error(error);
+    });
     console.log('Submitted order:', items);
 
     router.push(`/${redirectPage}`);
