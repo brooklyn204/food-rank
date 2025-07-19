@@ -28,7 +28,8 @@ export default function Vote() {
   const router = useRouter();
   const redirectPage = 'results';
 
-  const [name, setName] = useState('');
+  const [userName, setUserName] = useState('');
+  const [groupName, setGroupName] = useState('');
   const [items, setItems] = useState([]);
   const [locations, setLocations] = useState([]);
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function Vote() {
           const order = data.locations.map((location, index) => index);
           order.push(-1);
           setItems(order); // Create unique IDs for each item
-          setName(data.name);
+          setGroupName(data.name);
           setLocations(data.locations);
         })
         .catch(error => {
@@ -65,9 +66,8 @@ export default function Vote() {
       headers: {
             'Content-Type': 'application/json',
           },
-      body: JSON.stringify({ code: groupCode, locations: locations}),
+      body: JSON.stringify({ code: groupCode, order: items}),
     })
-    .then(response => response.json())
     .catch(error => {
       // handle error
       console.error(error);
@@ -82,9 +82,18 @@ export default function Vote() {
     <div className={styles.page}>
       <main className={styles.main}>
         <h1>Food Finder</h1>
+        <p>Voting for where your group {groupName} should eat</p>
 
-        {/* TODO: allow user to enter their name */}
-
+        <label>
+          Enter your name: <br />
+          <input
+            type="text"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            placeholder=""
+          />
+        </label>
+        {/* TODO: show instructions for voting */}
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext items={items} strategy={verticalListSortingStrategy}>
             <ItemArray items={items} vals={locations} interactive={true} />
