@@ -1,7 +1,7 @@
 'use client';
 
 import styles from "../page.module.css";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ResultsChart from '../../components/ResultsChart';
 import Location from '../../lib/models/Location';
@@ -11,24 +11,25 @@ export default function Results() {
   const groupCode = params.get('groupCode') || ''; // TODO: redirect back to home/to error page if this is empty
   const [error, setError] = useState(''); // For error checking -- necessary??
   const router = useRouter();
+  const [locations, setLocations] = useState([]);
 
-  // TODO: get results from server using groupCode
-
-  // FIXME: testing
-  const votesData = [
-      new Location('McDonalds', 'mcdonalds.com', 4),
-      new Location('Wendys', 'wendys.com', 7),
-      new Location('Chipotle', 'chipotle.com', 6),
-      new Location('Arbys', 'arbys.com', 7),
-      new Location('Shake Shack', 'shakeshack.com',4),
-    ];
-
+  useEffect(() => {
+      fetch(`/api/results?code=${encodeURIComponent(groupCode)}`)
+      .then(response => response.json())
+      .then(data => {
+        setLocations(data.locations);
+        // Not using voterData here, unlike dashboard
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, [groupCode]);
 
   return (
     <div className={styles.page}>
       <main className={styles.main}>
         <h1>Food Finder</h1>
-        <ResultsChart data={votesData} />
+        <ResultsChart data={locations} />
 
       </main>
     </div>

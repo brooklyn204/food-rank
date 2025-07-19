@@ -1,7 +1,7 @@
 'use client';
 
 import styles from "../page.module.css";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import Voter from '../../lib/models/Voter';
@@ -12,36 +12,31 @@ import ItemArray from '../../components/ItemArray'; // TODO: change these all to
 import ExpandableBox from '../../components/ExpandableBox';
 
 export default function Dashboard() {
+  console.log("Dashboard page loaded");
     const params = useSearchParams();
     const groupId = params.get('id') || ''; // TODO: redirect back to home/to error page if this is empty (also refactor this across files to use consistent naming)
     // TODO: get results from server using id
+    const [name, setName] = useState(''); // TODO: add name to page
+    const [locations, setLocations] = useState([]);
+    const [voterData, setVoterData] = useState([]);
 
-    const locations = [
-      new Location('McDonalds', 'mcdonalds.com', 4),
-      new Location('Wendys', 'wendys.com', 7),
-      new Location('Chipotle', 'chipotle.com', 6),
-      new Location('Arbys', 'arbys.com', 7),
-      new Location('Shake Shack', 'shakeshack.com',4),
-    ];
-    const voterData = [
-      new Voter( 
-        "Emily",
-        [0,3,2,-1,4,1],
-        3),
-      new Voter( 
-      "Josh",
-      [4,-1,3,1,0,2],
-      1),
-      new Voter( 
-      "Alex",
-      [2,1,3,4,0,-1],
-      5),
-      new Voter( 
-      "Nancy",
-      [1,3,4,-1,0,2],
-      3)
-    ];
-
+    useEffect(() => {
+        fetch(`/api/results?code=${encodeURIComponent(groupId)}`, {
+          method: 'GET', // or 'GET'
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          setName(data.name);
+          setLocations(data.locations); 
+          setVoterData(data.voters);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }, [groupId]);
 
     return (
       <div className={styles.page}>
