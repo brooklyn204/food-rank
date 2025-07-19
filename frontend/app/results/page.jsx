@@ -18,7 +18,7 @@ export default function Results() {
       .then(response => response.json())
       .then(data => {
         setLocations(data.locations);
-        // Not using voterData here, unlike dashboard
+        // Not using voters here, unlike dashboard
       })
       .catch(error => {
         console.error(error);

@@ -23,7 +23,7 @@ export default function Home() {
       return;
     }
     
-    router.push(`/${redirectPage}?name=${encodeURIComponent(name)}`); // TODO: pass codes around using cookies or something instead? Research best practices
+    router.push(`/${redirectPage}?name=${encodeURIComponent(name)}`); // TODO: pass codes around using cookies or something instead? Or at least hash them? Research best practices
   };
 
   return (
