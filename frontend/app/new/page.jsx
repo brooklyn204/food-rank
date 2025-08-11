@@ -6,7 +6,7 @@ import Location from '../../lib/models/Location';
 
 export default function New() {
     const [groupName, setGroupName] = useState('');
-    const [locations, setLocations] = useState([new Location({ name: 'Location 1' }), new Location({ name: 'Location 2' })]); 
+    const [locations, setLocations] = useState([new Location('Location A'), new Location('Location B')]); 
     const defaultText = "Fun Food Fam" // TODO: pick better default text (maybe have load from config file?)
     const router = useRouter();
     const redirectPage = 'dashboard';
@@ -24,8 +24,8 @@ export default function New() {
           .then(response => response.json())
           .then(data => {
             console.log('POSTed',groupName,'and',locations,'to /create endpoint, got back',data);
-            let groupId = data.groupId;
-            router.push(`/${redirectPage}?id=${encodeURIComponent(groupId)}`);
+            let groupCode = data.groupCode;
+            router.push(`/${redirectPage}?id=${encodeURIComponent(groupCode)}`);
           })
           .catch(error => {
             // TODO: handle error -- redirect to home page, probably
