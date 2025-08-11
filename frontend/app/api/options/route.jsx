@@ -1,24 +1,22 @@
 import { NextResponse } from 'next/server';
-import Location from '../../../lib/models/Location';
-import Voter from '../../../lib/models/Voter';
+import { getContainer } from '../../../lib/cosmosClient';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
+  const container = await getContainer();
+
   // TODO: validate code, redirect to error page if invalid
 
   console.log('Getting results for:', code);
 
-  // TODO: get from DB, return options in order the were entered
+  const query = {
+      query: 'SELECT TOP 1 * FROM c WHERE c.groupCode = @code',
+      parameters: [{ name: '@code', value: code }],
+    };
+  const { resources: items } = await container.items.query(query).fetchAll();
+  const item = items.length > 0 ? items[0] : null; // TODO: error handling if no items found
+  console.log('Got item:', item);
 
-  const name = "My Group";
-  const locations = [
-      new Location('McDonalds', 'mcdonalds.com', 4),
-      new Location('Wendys', 'wendys.com', 7),
-      new Location('Chipotle', 'chipotle.com', 6),
-      new Location('Arbys', 'arbys.com', 7),
-      new Location('Shake Shack', 'shakeshack.com',4),
-    ];
-
-  return NextResponse.json({ message: `Results for ${code}`, name: name, locations: locations });
+  return NextResponse.json({ message: `Results for ${code}`, name: item.name, locations: item.locations });
 }

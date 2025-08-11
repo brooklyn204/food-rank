@@ -23,7 +23,7 @@ import Location from '../../lib/models/Location';
 
 export default function Vote() {
   const params = useSearchParams();
-  const groupCode = params.get('groupCode') || ''; // TODO: redirect back to home/to error page if this is empty
+  const groupCode = params.get('name') || ''; // TODO: redirect back to home/to error page if this is empty
   const [error, setError] = useState(''); // For error checking -- necessary??
   const router = useRouter();
   const redirectPage = 'results';
