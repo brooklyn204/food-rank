@@ -15,7 +15,6 @@ export default function Dashboard() {
   console.log("Dashboard page loaded");
     const params = useSearchParams();
     const groupId = params.get('id') || ''; // TODO: redirect back to home/to error page if this is empty (also refactor this across files to use consistent naming)
-    // TODO: get results from server using id
     const [name, setName] = useState(''); // TODO: add name to page
     const [locations, setLocations] = useState([]);
     const [voterData, setVoterData] = useState([]);
@@ -42,6 +41,8 @@ export default function Dashboard() {
       <div className={styles.page}>
         <main className={styles.main}>
           <h1>Food Finder</h1>
+          <h3>Group Code: {groupId}</h3>
+          <p>Share this with your group so they can vote for their favorite place to eat!</p>
           <h3>Aggregate Results</h3>
           <ResultsChart data={locations} />
           {/* TODO: add in a pie chart showing how many users would at least accept each location, or maybe color each bar/sort the bars based on how many people would accept it? Should probably build into ResultsChart component, so propogates to Results page */}
