@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from "../page.module.css";
 import Location from '../../lib/models/Location';
+import RestaurantMap from '../../components/RestaurantMap';
 
 export default function New() {
   const [groupName, setGroupName] = useState('');
@@ -18,6 +19,10 @@ export default function New() {
 
     setLocations((prev) => [...prev, new Location(locationInput.trim())]);
     setLocationInput("");
+  };
+
+  const handlePlaceAdd = (place) => {
+    setLocations((prev) => [...prev, place]);
   };
 
   const handleRemoveLocation = (index) => {
@@ -47,6 +52,7 @@ export default function New() {
   };
 
   return (
+    
     <div className={styles.page}>
       <main className={styles.main}>
         <h1>Food Finder</h1>
@@ -56,24 +62,9 @@ export default function New() {
             onChange={(e) => setGroupName(e.target.value)}
             placeholder={defaultText}
         />
+        <RestaurantMap onPlaceAdd={handlePlaceAdd} />
         {/* TODO: allow locations to be entered here */}
         <div className="max-w-md mx-auto p-4 border rounded-lg shadow-md">
-          <div className="flex gap-2 mb-4">
-            <input
-              type="text"
-              value={locationInput}
-              onChange={(e) => setLocationInput(e.target.value)}
-              placeholder="Enter location name"
-              className="flex-1 p-2 border rounded"
-            />
-            <button
-              onClick={handleAddLocation}
-              className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            >
-              Add
-            </button>
-          </div>
-
           <ul className="mb-4">
             {locations.map((loc, i) => (
               <li key={i} className="flex justify-between items-center mb-1">
@@ -104,7 +95,6 @@ export default function New() {
               Create Group
           </button>
         )}
-
       </main>
     </div>
   );
